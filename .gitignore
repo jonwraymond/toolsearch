@@ -1,0 +1,69 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+go.work.sum
+
+# Build directories
+/bin/
+/dist/
+/build/
+/vendor/
+
+# Coverage
+*.coverprofile
+coverage.out
+coverage.html
+
+# Profiling
+*.prof
+*.pprof
+cpu.out
+mem.out
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Secrets / Credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519
+
+# API keys / tokens
+*.token
+*.secret
+config.local.*
+
+# Debug
+debug
+debug.test
+__debug_bin*
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+tmp/
+temp/
