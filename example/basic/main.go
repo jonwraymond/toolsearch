@@ -21,7 +21,11 @@ func main() {
 	// Create a BM25 searcher with default configuration.
 	// Defaults: NameBoost=3, NamespaceBoost=2, TagsBoost=2
 	searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{})
-	defer searcher.Close()
+	defer func() {
+		if err := searcher.Close(); err != nil {
+			log.Printf("close failed: %v", err)
+		}
+	}()
 
 	// Create sample tool documents (normally provided by toolindex)
 	docs := []toolindex.SearchDoc{

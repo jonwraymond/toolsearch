@@ -58,7 +58,11 @@ func main() {
 	// Default config: NameBoost=3, NamespaceBoost=2, TagsBoost=2
 	fmt.Println("=== Default Config (NameBoost=3) ===")
 	defaultSearcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{})
-	defer defaultSearcher.Close()
+	defer func() {
+		if err := defaultSearcher.Close(); err != nil {
+			log.Printf("close failed: %v", err)
+		}
+	}()
 
 	results, err := defaultSearcher.Search("deploy", 10, docs)
 	if err != nil {
@@ -75,7 +79,11 @@ func main() {
 		NamespaceBoost: 1,
 		TagsBoost:      1,
 	})
-	defer highNameBoost.Close()
+	defer func() {
+		if err := highNameBoost.Close(); err != nil {
+			log.Printf("close failed: %v", err)
+		}
+	}()
 
 	results, err = highNameBoost.Search("deploy", 10, docs)
 	if err != nil {
@@ -91,7 +99,11 @@ func main() {
 		MaxDocs:       2,              // Only index first 2 docs
 		MaxDocTextLen: 50,             // Truncate long descriptions
 	})
-	defer limitedSearcher.Close()
+	defer func() {
+		if err := limitedSearcher.Close(); err != nil {
+			log.Printf("close failed: %v", err)
+		}
+	}()
 
 	// Create docs with long descriptions
 	longDocs := make([]toolindex.SearchDoc, 4)

@@ -15,7 +15,11 @@ import (
 // Mirrors: example/basic/main.go
 func TestExample_Basic(t *testing.T) {
 	searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{})
-	defer searcher.Close()
+	defer func() {
+		if err := searcher.Close(); err != nil {
+			t.Fatalf("close failed: %v", err)
+		}
+	}()
 
 	docs := []toolindex.SearchDoc{
 		{
@@ -160,7 +164,11 @@ func TestExample_CustomConfig(t *testing.T) {
 	// Test 1: Default config - name matches rank higher
 	t.Run("default_config_name_boost", func(t *testing.T) {
 		searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{})
-		defer searcher.Close()
+		defer func() {
+			if err := searcher.Close(); err != nil {
+				t.Fatalf("close failed: %v", err)
+			}
+		}()
 
 		results, err := searcher.Search("deploy", 10, docs)
 		if err != nil {
@@ -182,7 +190,11 @@ func TestExample_CustomConfig(t *testing.T) {
 			NamespaceBoost: 1,
 			TagsBoost:      1,
 		})
-		defer searcher.Close()
+		defer func() {
+			if err := searcher.Close(); err != nil {
+				t.Fatalf("close failed: %v", err)
+			}
+		}()
 
 		results, err := searcher.Search("deploy", 10, docs)
 		if err != nil {
@@ -201,7 +213,11 @@ func TestExample_CustomConfig(t *testing.T) {
 		searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{
 			MaxDocs: 2,
 		})
-		defer searcher.Close()
+		defer func() {
+			if err := searcher.Close(); err != nil {
+				t.Fatalf("close failed: %v", err)
+			}
+		}()
 
 		longDocs := make([]toolindex.SearchDoc, 4)
 		for i := range longDocs {
@@ -231,7 +247,11 @@ func TestExample_CustomConfig(t *testing.T) {
 		searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{
 			MaxDocTextLen: 50,
 		})
-		defer searcher.Close()
+		defer func() {
+			if err := searcher.Close(); err != nil {
+				t.Fatalf("close failed: %v", err)
+			}
+		}()
 
 		// "uniqueword" is past the truncation point
 		longDoc := []toolindex.SearchDoc{

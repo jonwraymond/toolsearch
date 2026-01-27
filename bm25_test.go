@@ -12,6 +12,7 @@ import (
 // Cycle 1: Interface Compliance & Basic Structure
 
 func TestBM25Searcher_ImplementsSearcher(t *testing.T) {
+	t.Helper()
 	// Compile-time interface check
 	var _ toolindex.Searcher = (*BM25Searcher)(nil)
 }
@@ -1010,5 +1011,7 @@ func TestBM25Searcher_ToolindexIntegration(t *testing.T) {
 	}
 
 	// Clean up
-	searcher.Close()
+	if err := searcher.Close(); err != nil {
+		t.Fatalf("close failed: %v", err)
+	}
 }
