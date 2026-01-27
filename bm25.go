@@ -2,6 +2,7 @@
 package toolsearch
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -219,12 +220,16 @@ func (s *BM25Searcher) rebuildIndex(docs []toolindex.SearchDoc, fingerprint stri
 		idToSummary[doc.ID] = doc.Summary
 		weightedText := buildWeightedDoc(s.cfg, doc)
 		if err := batch.Index(doc.ID, indexedDoc{Content: weightedText}); err != nil {
-			index.Close()
+			if cerr := index.Close(); cerr != nil {
+				return fmt.Errorf("%w; close index: %v", err, cerr)
+			}
 			return err
 		}
 	}
 	if err := index.Batch(batch); err != nil {
-		index.Close()
+		if cerr := index.Close(); cerr != nil {
+			return fmt.Errorf("%w; close index: %v", err, cerr)
+		}
 		return err
 	}
 
@@ -234,13 +239,20 @@ func (s *BM25Searcher) rebuildIndex(docs []toolindex.SearchDoc, fingerprint stri
 
 	// Double-check fingerprint (another goroutine may have rebuilt)
 	if s.lastFingerprint == fingerprint {
-		index.Close()
+		if cerr := index.Close(); cerr != nil {
+			return fmt.Errorf("close index: %w", cerr)
+		}
 		return nil
 	}
 
 	// Close old index if it exists
 	if s.index != nil {
-		s.index.Close()
+		if cerr := s.index.Close(); cerr != nil {
+			if nerr := index.Close(); nerr != nil {
+				return fmt.Errorf("close old index: %v; close new index: %v", cerr, nerr)
+			}
+			return fmt.Errorf("close old index: %w", cerr)
+		}
 	}
 
 	s.index = index
