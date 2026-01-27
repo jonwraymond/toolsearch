@@ -218,7 +218,10 @@ func (s *BM25Searcher) rebuildIndex(docs []toolindex.SearchDoc, fingerprint stri
 	for _, doc := range docs {
 		idToSummary[doc.ID] = doc.Summary
 		weightedText := buildWeightedDoc(s.cfg, doc)
-		batch.Index(doc.ID, indexedDoc{Content: weightedText})
+		if err := batch.Index(doc.ID, indexedDoc{Content: weightedText}); err != nil {
+			index.Close()
+			return err
+		}
 	}
 	if err := index.Batch(batch); err != nil {
 		index.Close()

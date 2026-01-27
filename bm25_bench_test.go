@@ -31,7 +31,9 @@ func BenchmarkSearch_ColdIndex(b *testing.B) {
 
 	for b.Loop() {
 		s := NewBM25Searcher(BM25Config{})
-		s.Search("git", 10, docs)
+		if _, err := s.Search("git", 10, docs); err != nil {
+			b.Fatalf("search failed: %v", err)
+		}
 	}
 }
 
@@ -40,11 +42,15 @@ func BenchmarkSearch_WarmIndex(b *testing.B) {
 	docs := makeBenchDocs(1000)
 
 	// Warm up the index
-	s.Search("git", 10, docs)
+	if _, err := s.Search("git", 10, docs); err != nil {
+		b.Fatalf("warmup search failed: %v", err)
+	}
 
 	b.ResetTimer()
 	for b.Loop() {
-		s.Search("kubernetes", 10, docs)
+		if _, err := s.Search("kubernetes", 10, docs); err != nil {
+			b.Fatalf("search failed: %v", err)
+		}
 	}
 }
 
@@ -53,7 +59,9 @@ func BenchmarkSearch_EmptyQuery(b *testing.B) {
 	docs := makeBenchDocs(1000)
 
 	for b.Loop() {
-		s.Search("", 10, docs)
+		if _, err := s.Search("", 10, docs); err != nil {
+			b.Fatalf("search failed: %v", err)
+		}
 	}
 }
 
@@ -62,11 +70,15 @@ func BenchmarkSearch_MultiTerm(b *testing.B) {
 	docs := makeBenchDocs(1000)
 
 	// Warm up
-	s.Search("git docker", 10, docs)
+	if _, err := s.Search("git docker", 10, docs); err != nil {
+		b.Fatalf("warmup search failed: %v", err)
+	}
 
 	b.ResetTimer()
 	for b.Loop() {
-		s.Search("git docker kubernetes", 10, docs)
+		if _, err := s.Search("git docker kubernetes", 10, docs); err != nil {
+			b.Fatalf("search failed: %v", err)
+		}
 	}
 }
 
@@ -79,11 +91,15 @@ func BenchmarkSearch_VaryingCatalogSize(b *testing.B) {
 			docs := makeBenchDocs(size)
 
 			// Warm up
-			s.Search("git", 10, docs)
+			if _, err := s.Search("git", 10, docs); err != nil {
+				b.Fatalf("warmup search failed: %v", err)
+			}
 
 			b.ResetTimer()
 			for b.Loop() {
-				s.Search("git", 10, docs)
+				if _, err := s.Search("git", 10, docs); err != nil {
+					b.Fatalf("search failed: %v", err)
+				}
 			}
 		})
 	}
