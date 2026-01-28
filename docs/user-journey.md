@@ -4,20 +4,7 @@ This journey shows how `toolsearch` slots into the end-to-end workflow as a plug
 
 ## End-to-end flow (stack view)
 
-```mermaid
-sequenceDiagram
-  participant Agent
-  participant MCP as metatools-mcp
-  participant Index as toolindex
-  participant Search as toolsearch (BM25)
-
-  Agent->>MCP: search_tools(query)
-  MCP->>Index: Search
-  Index->>Search: Search(query, docs)
-  Search-->>Index: ranked summaries
-  Index-->>MCP: summaries
-  MCP-->>Agent: tools
-```
+![Diagram](assets/diagrams/user-journey.svg)
 
 ## Step-by-step
 

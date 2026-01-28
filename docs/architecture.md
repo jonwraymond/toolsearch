@@ -4,27 +4,15 @@
 
 ## Indexing flow
 
-```mermaid
-flowchart LR
-  A[Search docs] --> B[Fingerprint]
-  B --> C[BM25 index]
-  C --> D[Ranked summaries]
-```
+
+![Diagram](assets/diagrams/indexing-flow.svg)
+
 
 ## Search sequence
 
-```mermaid
-sequenceDiagram
-  participant Index
-  participant Searcher
-  participant Bleve
 
-  Index->>Searcher: Search(query, docs)
-  Searcher->>Searcher: Build index if fingerprint changed
-  Searcher->>Bleve: Query
-  Bleve-->>Searcher: Hits
-  Searcher-->>Index: Summaries
-```
+![Diagram](assets/diagrams/indexing-flow.svg)
+
 
 ## Determinism
 

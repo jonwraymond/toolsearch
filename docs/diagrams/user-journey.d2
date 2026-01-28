@@ -1,0 +1,21 @@
+direction: down
+
+style: { font-size: 14 }
+
+agent: "Agent" { shape: oval }
+
+metatools: "metatools-mcp" { shape: hexagon }
+
+index: "toolindex" { shape: cylinder }
+
+search: "toolsearch (BM25)" {
+  shape: diamond
+  style: { shadow: true }
+}
+
+agent -> metatools: "search_tools(query)"
+metatools -> index: "Search"
+index -> search: "Search(query, docs)"
+search -> index: "ranked summaries"
+index -> metatools: "summaries"
+metatools -> agent: "tools"
