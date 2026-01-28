@@ -1,5 +1,7 @@
 # toolsearch
 
+[![Docs](https://img.shields.io/badge/docs-ai--tools--stack-blue)](https://jonwraymond.github.io/ai-tools-stack/)
+
 `toolsearch` provides optional, higher-quality search strategies for
 `toolindex`. It keeps heavier ranking/indexing dependencies out of the core
 registry while still plugging into the same `toolindex.Searcher` interface.
@@ -52,4 +54,3 @@ See runnable examples in:
 ## Version compatibility
 
 See `VERSIONS.md` for the authoritative, auto-generated compatibility matrix.
-

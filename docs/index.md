@@ -34,3 +34,7 @@ idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{Searcher: searcher})
 - Examples: `examples.md`
 - Design Notes: `design-notes.md`
 - User Journey: `user-journey.md`
+
+!!! note "Deep dives"
+    - Design Notes: `design-notes.md`
+    - User Journey: `user-journey.md`
