@@ -9,6 +9,7 @@ This page documents the tradeoffs and error semantics behind `toolsearch`.
 - **Deterministic ordering.** Documents are sorted by tool ID before indexing. Ties are broken by tool ID to avoid nondeterministic results.
 - **In-memory index.** Uses Bleve's in-memory index for speed and simplicity; this trades persistence for low overhead.
 - **Fingerprint-based rebuild.** Index rebuilds only when the tool set changes (based on a fingerprint), reducing overhead for repeated searches.
+- **Safe query parsing.** Uses a plain `MatchQuery` (no operator syntax) to prevent query syntax injection.
 
 ## Error semantics
 

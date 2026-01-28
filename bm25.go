@@ -142,6 +142,9 @@ func (s *BM25Searcher) Search(query string, limit int, docs []toolindex.SearchDo
 	if len(sortedDocs) == 0 {
 		return []toolindex.Summary{}, nil
 	}
+	if limit <= 0 {
+		return []toolindex.Summary{}, nil
+	}
 
 	// 5. Compute fingerprint from sortedDocs (already sorted)
 	fingerprint := computeFingerprint(sortedDocs)
@@ -165,9 +168,15 @@ func (s *BM25Searcher) Search(query string, limit int, docs []toolindex.SearchDo
 	// Normalize query
 	query = strings.ToLower(query)
 
-	// 8. Search uses len(sortedDocs)
-	searchRequest := bleve.NewSearchRequest(bleve.NewQueryStringQuery(query))
-	searchRequest.Size = len(sortedDocs) // Get all matches for proper tie-breaking
+	// 8. Search uses a plain match query to avoid query syntax injection.
+	matchQuery := bleve.NewMatchQuery(query)
+	matchQuery.SetField("content")
+	searchRequest := bleve.NewSearchRequest(matchQuery)
+	if limit > len(sortedDocs) {
+		limit = len(sortedDocs)
+	}
+	searchRequest.Size = limit
+	searchRequest.SortBy([]string{"-_score", "_id"})
 	searchResult, err := s.index.Search(searchRequest)
 	if err != nil {
 		return nil, err
