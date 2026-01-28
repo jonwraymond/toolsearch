@@ -4,6 +4,12 @@
 keeping heavy dependencies out of the core registry. Today it ships a BM25
 searcher backed by Bleve.
 
+[![Docs](https://img.shields.io/badge/docs-ai--tools--stack-blue)](https://jonwraymond.github.io/ai-tools-stack/)
+
+## Deep dives
+- Design Notes: `design-notes.md`
+- User Journey: `user-journey.md`
+
 ## Motivation
 
 - **Keep toolindex small** while enabling stronger ranking
@@ -35,6 +41,3 @@ idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{Searcher: searcher})
 - Design Notes: `design-notes.md`
 - User Journey: `user-journey.md`
 
-!!! note "Deep dives"
-    - Design Notes: `design-notes.md`
-    - User Journey: `user-journey.md`
