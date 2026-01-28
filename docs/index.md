@@ -32,3 +32,5 @@ idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{Searcher: searcher})
 - Ranking pipeline: `architecture.md`
 - Configuration and caps: `usage.md`
 - Examples: `examples.md`
+- Design Notes: `design-notes.md`
+- User Journey: `user-journey.md`
