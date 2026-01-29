@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/jonwraymond/toolsearch/compare/toolsearch-v0.2.0...toolsearch-v0.3.0) (2026-01-29)
+
+
+### Features
+
+* mark BM25 searcher deterministic ([efc51c8](https://github.com/jonwraymond/toolsearch/commit/efc51c8f075e860deb45861457ed4e8106c65472))
+* mark BM25 searcher deterministic ([e43ae7a](https://github.com/jonwraymond/toolsearch/commit/e43ae7ad69a66c70e99325bd97b8cbd7370ea14f))
+
 ## [0.2.0](https://github.com/jonwraymond/toolsearch/compare/toolsearch-v0.1.10...toolsearch-v0.2.0) (2026-01-28)
 
 
