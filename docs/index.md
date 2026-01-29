@@ -7,8 +7,8 @@ searcher backed by Bleve.
 [![Docs](https://img.shields.io/badge/docs-ai--tools--stack-blue)](https://jonwraymond.github.io/ai-tools-stack/)
 
 ## Deep dives
-- Design Notes: `design-notes.md`
-- User Journey: `user-journey.md`
+- Design Notes: [design-notes.md](design-notes.md)
+- User Journey: [user-journey.md](user-journey.md)
 
 ## Motivation
 
@@ -38,6 +38,6 @@ idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{Searcher: searcher})
 - Ranking pipeline: `architecture.md`
 - Configuration and caps: `usage.md`
 - Examples: `examples.md`
-- Design Notes: `design-notes.md`
-- User Journey: `user-journey.md`
+- Design Notes: [design-notes.md](design-notes.md)
+- User Journey: [user-journey.md](user-journey.md)
 
