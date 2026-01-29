@@ -36,6 +36,7 @@ type BM25Searcher struct {
 
 // Ensure interface compliance at compile time.
 var _ toolindex.Searcher = (*BM25Searcher)(nil)
+var _ toolindex.DeterministicSearcher = (*BM25Searcher)(nil)
 
 // NewBM25Searcher creates a new BM25-based searcher with the given config.
 // Zero values in config are replaced with sensible defaults.
@@ -54,6 +55,11 @@ func NewBM25Searcher(cfg BM25Config) *BM25Searcher {
 	return &BM25Searcher{
 		cfg: cfg,
 	}
+}
+
+// Deterministic reports whether this searcher returns stable ordering.
+func (s *BM25Searcher) Deterministic() bool {
+	return true
 }
 
 // IndexBuildCount returns the number of times the index has been built.
