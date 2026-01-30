@@ -21,6 +21,11 @@ searcher backed by Bleve.
 - `BM25Searcher` (implements `toolindex.Searcher`)
 - `BM25Config` for ranking and safety caps
 
+### Interface Contracts
+
+- `BM25Searcher` is deterministic and safe for concurrent use.
+- Implements `toolindex.Searcher` and `toolindex.DeterministicSearcher`.
+
 ## Quickstart
 
 ```go
@@ -40,4 +45,3 @@ idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{Searcher: searcher})
 - Examples: `examples.md`
 - Design Notes: [design-notes.md](design-notes.md)
 - User Journey: [user-journey.md](user-journey.md)
-

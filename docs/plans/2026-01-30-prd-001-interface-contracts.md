@@ -1,6 +1,6 @@
 # PRD-001 Interface Contracts — toolsearch
 
-**Status:** Draft
+**Status:** Done
 **Date:** 2026-01-30
 
 
@@ -35,4 +35,3 @@ This repo defines no Go interfaces; the work is verification-only.
 - All interfaces have GoDoc with explicit behavioral contract.
 - Contract tests exist and pass.
 - No interface contract contradictions across repos.
-
