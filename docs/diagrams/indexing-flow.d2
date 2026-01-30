@@ -1,3 +1,90 @@
+# toolsearch Indexing Flow
+# BM25 index build and search
+
 direction: right
 
-"Search docs" -> Fingerprint -> "BM25 index" -> "Ranked summaries"
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 0
+  }
+  search-fill: "#d69e2e"
+  process-fill: "#3182ce"
+  output-fill: "#38a169"
+}
+
+classes: {
+  input-node: {
+    style: {
+      fill: ${search-fill}
+      stroke: "#b7791f"
+      stroke-width: 2
+      font-color: "#fff"
+    }
+  }
+  process-node: {
+    style: {
+      fill: ${process-fill}
+      stroke: "#2c5282"
+      stroke-width: 2
+      font-color: "#fff"
+    }
+  }
+  output-node: {
+    style: {
+      fill: ${output-fill}
+      stroke: "#276749"
+      stroke-width: 2
+      font-color: "#fff"
+    }
+  }
+  data-flow: {
+    style: {
+      stroke: "#4a5568"
+      stroke-width: 2
+    }
+  }
+}
+
+# Title
+title: "toolsearch - BM25 Indexing" {
+  shape: text
+  near: top-center
+  style: {
+    font-size: 24
+    bold: true
+    font-color: "#1a365d"
+  }
+}
+
+# Pipeline
+docs: "📋 Search Docs\nName + Description + Tags" {
+  shape: document
+  class: input-node
+}
+
+fingerprint: "🔑 Fingerprint\nContent Hash" {
+  shape: hexagon
+  class: process-node
+}
+
+index: "📊 BM25 Index\nBleve Engine" {
+  shape: cylinder
+  class: process-node
+}
+
+summaries: "✅ Ranked Summaries\nScored Results" {
+  shape: document
+  class: output-node
+}
+
+# Flow
+docs -> fingerprint: "tokenize" {
+  class: data-flow
+}
+fingerprint -> index: "build/cache" {
+  class: data-flow
+}
+index -> summaries: "search + rank" {
+  class: data-flow
+}

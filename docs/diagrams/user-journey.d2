@@ -1,21 +1,129 @@
+# toolsearch User Journey
+# BM25 search strategy flow
+
 direction: down
 
-style: { font-size: 14 }
-
-agent: "Agent" { shape: oval }
-
-metatools: "metatools-mcp" { shape: hexagon }
-
-index: "toolindex" { shape: cylinder }
-
-search: "toolsearch (BM25)" {
-  shape: diamond
-  style: { shadow: true }
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 0
+  }
+  discovery-fill: "#3182ce"
+  surface-fill: "#2b6cb0"
+  search-fill: "#d69e2e"
+  actor-fill: "#e2e8f0"
 }
 
-agent -> metatools: "search_tools(query)"
-metatools -> index: "Search"
-index -> search: "Search(query, docs)"
-search -> index: "ranked summaries"
-index -> metatools: "summaries"
-metatools -> agent: "tools"
+classes: {
+  actor: {
+    style: {
+      fill: ${actor-fill}
+      stroke: "#a0aec0"
+      stroke-width: 2
+      font-color: "#1a202c"
+      bold: true
+    }
+  }
+  discovery: {
+    style: {
+      fill: ${discovery-fill}
+      stroke: "#2c5282"
+      stroke-width: 2
+      font-color: "#fff"
+    }
+  }
+  surface: {
+    style: {
+      fill: ${surface-fill}
+      stroke: "#1a365d"
+      stroke-width: 2
+      font-color: "#fff"
+    }
+  }
+  search: {
+    style: {
+      fill: ${search-fill}
+      stroke: "#b7791f"
+      stroke-width: 2
+      font-color: "#fff"
+      shadow: true
+    }
+  }
+  request-flow: {
+    style: {
+      stroke: ${surface-fill}
+      stroke-width: 2
+    }
+  }
+  search-flow: {
+    style: {
+      stroke: ${search-fill}
+      stroke-width: 2
+    }
+  }
+  result-flow: {
+    style: {
+      stroke: "#718096"
+      stroke-width: 2
+      stroke-dash: 3
+    }
+  }
+}
+
+# Title
+title: "toolsearch - BM25 Strategy" {
+  shape: text
+  near: top-center
+  style: {
+    font-size: 24
+    bold: true
+    font-color: "#1a365d"
+  }
+}
+
+# Actors
+agent: "🤖 Agent" {
+  shape: person
+  class: actor
+}
+
+# Components
+metatools: "🔷 metatools-mcp\nMCP Surface" {
+  shape: hexagon
+  class: surface
+}
+
+index: "🗂️ toolindex\nRegistry" {
+  shape: cylinder
+  class: discovery
+}
+
+search: "🔍 toolsearch\nBM25 Ranking" {
+  shape: diamond
+  class: search
+}
+
+# Flow
+agent -> metatools: "search_tools(query)" {
+  class: request-flow
+}
+
+metatools -> index: "Search" {
+  class: request-flow
+}
+
+index -> search: "Search(query, docs)" {
+  class: search-flow
+}
+
+search -> index: "ranked summaries" {
+  class: result-flow
+}
+
+index -> metatools: "summaries" {
+  class: result-flow
+}
+
+metatools -> agent: "tools" {
+  class: result-flow
+}
