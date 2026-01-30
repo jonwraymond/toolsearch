@@ -4,8 +4,8 @@ go 1.24.4
 
 require (
 	github.com/blevesearch/bleve/v2 v2.5.7
-	github.com/jonwraymond/toolindex v0.2.2
-	github.com/jonwraymond/toolmodel v0.1.3
+	github.com/jonwraymond/toolindex v0.3.0
+	github.com/jonwraymond/toolmodel v0.2.0
 	github.com/modelcontextprotocol/go-sdk v1.2.0
 )
 
