@@ -1,5 +1,12 @@
 # toolsearch
 
+> **DEPRECATED**: This package has been merged into `tooldiscovery/search`.
+> Please migrate to `github.com/jonwraymond/tooldiscovery/search`.
+>
+> See [MIGRATION.md](./MIGRATION.md) for migration instructions.
+
+---
+
 [![Docs](https://img.shields.io/badge/docs-ai--tools--stack-blue)](https://jonwraymond.github.io/ai-tools-stack/)
 
 `toolsearch` provides optional, higher-quality search strategies for
@@ -11,45 +18,28 @@ Today it ships a BM25 searcher backed by Bleve.
 ## Install
 
 ```bash
-go get github.com/jonwraymond/toolsearch
+# DEPRECATED - use tooldiscovery/search instead
+go get github.com/jonwraymond/tooldiscovery/search
 ```
 
-## Quick start (inject into toolindex)
+## Migration
+
+This package is deprecated. Please update your imports:
 
 ```go
-import (
-  "github.com/jonwraymond/toolindex"
-  "github.com/jonwraymond/toolsearch"
-)
+// Old import (deprecated)
+import "github.com/jonwraymond/toolsearch"
 
-searcher := toolsearch.NewBM25Searcher(toolsearch.BM25Config{})
-
-idx := toolindex.NewInMemoryIndex(toolindex.IndexOptions{
-  Searcher: searcher,
-})
+// New import
+import "github.com/jonwraymond/tooldiscovery/search"
 ```
 
-See runnable examples in:
-- `toolsearch/example/basic/main.go`
-- `toolsearch/example/custom_config/main.go`
-- `toolsearch/example/toolindex_integration/main.go`
-
-## BM25 behavior and safety
-
-- Deterministic:
-  - documents are sorted by ID before fingerprinting and `MaxDocs` limiting
-  - tie-breaking is score DESC, then ID ASC
-- Efficient:
-  - the Bleve index is cached and rebuilt only when the doc fingerprint changes
-- Bounded:
-  - `MaxDocs` limits indexed documents
-  - `MaxDocTextLen` truncates very long descriptions
+See [MIGRATION.md](./MIGRATION.md) for complete migration instructions.
 
 ## Documentation
 
-- `docs/index.md` — overview
-- `docs/design-notes.md` — tradeoffs and error semantics
-- `docs/user-journey.md` — end-to-end agent workflow
+- [MIGRATION.md](./MIGRATION.md) — migration guide to tooldiscovery/search
+- [tooldiscovery docs](https://jonwraymond.github.io/ai-tools-stack/) — consolidated documentation
 
 ## Version compatibility
 
